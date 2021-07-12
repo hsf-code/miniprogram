@@ -1,0 +1,4 @@
+<view>
+  <button bindtap="clickMe">{{ test }}</button>
+  <component-demo1></component-demo1>
+</view>

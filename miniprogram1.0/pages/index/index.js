@@ -1,7 +1,8 @@
 // index.js
-// 获取应用实例
+// 获取全局唯一的应用实例
 const app = getApp()
-
+// console.log(app.globalData);
+// Page这个是页面的构造函数
 Page({
   data: {
     motto: '这是一个测试版',
@@ -46,6 +47,24 @@ Page({
     })
   },
   clickMe() {
-    this.setData({ motto: "我被点击了!" })
+    this.setData({ motto: "我被点击了!" });
+    wx.navigateTo({
+      url: '../demo/demo',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        // 在events中注册事件
+        acceptDataFromOpenedPage: function(data) {
+          console.log(data)
+        },
+        someEvent: function(data) {
+          console.log(data)
+        }
+      },
+      success: function(res) {
+        // 通过eventChannel向被打开页面传送数据
+        console.log('事件触发', res);
+        res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'test' })
+      }
+    })
   }
 })
